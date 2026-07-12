@@ -1,4 +1,4 @@
-name: Deploy Node.js App
+name: Deploy Node.js App to EC2
 
 on:
   push:
@@ -10,16 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Install Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ec2-user/taskflow-nodejs-ec2
 
-    - name: Install dependencies
-      run: npm install
+            git pull origin main
 
-    - name: Test application
-      run: node app.js
+            npm install
+
+            pm2 restart taskflow || pm2 start app.js --name taskflow
+
+            pm2 save
+            #test
