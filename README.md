@@ -1,3 +1,4 @@
+<img width="1876" height="893" alt="Screenshot 2026-07-12 113636" src="https://github.com/user-attachments/assets/515b17c6-651f-4069-83ff-433edc0ddfa5" />
 # 🚀 TaskFlow – Node.js Deployment on AWS EC2 using GitHub Actions
 
 ## 📌 Project Overview
